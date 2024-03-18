@@ -8,8 +8,6 @@ const pool = new Pool({
   database: 'my_store'
 })
 
-
-
 module.exports = pool;
 
 
