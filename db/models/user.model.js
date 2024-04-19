@@ -1,4 +1,4 @@
-const { Model, DataTypes, Sequelize } = require('sequelize')
+const { Model, DataTypes, Sequelize } = require('sequelize');
 
 const USER_TABLE = 'users';
 
@@ -19,6 +19,11 @@ const UserSchema = {
     allowNull: false,
     type: DataTypes.STRING,
   },
+  role: {
+    allowNull: false,
+    type: DataTypes.STRING,
+    defaultValue: 'customer',
+  },
   createdAt: {
     allowNull: false,
     type: DataTypes.DATE,
@@ -31,6 +36,7 @@ const UserSchema = {
 
 class User extends Model {
   static associate() {
+    //Esto es para crear las relaciones -> one-to-many, one-to-one, many-to-many
     //associate
   }
   static config(sequelize) {
