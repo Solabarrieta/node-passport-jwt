@@ -35,9 +35,13 @@ const UserSchema = {
 }
 
 class User extends Model {
-  static associate() {
+  static associate(models) {
     //Esto es para crear las relaciones -> one-to-many, one-to-one, many-to-many
     //associate
+    this.hasOne(models.Customer, {
+      as: 'customer',
+      foreignKey: 'userId'
+    })
   }
   static config(sequelize) {
     return {
