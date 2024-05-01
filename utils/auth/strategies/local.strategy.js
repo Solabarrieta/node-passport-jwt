@@ -19,7 +19,7 @@ const LocalStrategy = new Strategy({
       if (!isMatch) {
         done(boom.unauthorized(), false)
       }
-      delete user.dataValues.password
+      // delete user.dataValues.password
       done(null, user)
     } catch (error) {
       done(error, false)
@@ -27,6 +27,4 @@ const LocalStrategy = new Strategy({
   }
 )
 
-module.exports = {
-  LocalStrategy
-}
+module.exports = LocalStrategy
