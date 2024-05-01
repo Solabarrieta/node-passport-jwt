@@ -2,9 +2,11 @@ const bcrypt = require('bcrypt')
 
 async function hashPassword() {
   const myPassword = 'oier1234'
-  const hash = '$2b$10$1IYJVEFgCeuhPZxiLviGaupNRohujMXCtFuVbq71g5Rx2mGFFRA0C'
-  const isMatch = await bcrypt.compare(myPassword, hash)
-  console.log(isMatch)
+  const salt = await bcrypt.genSalt();
+  console.log('Salt: ', salt)
+  const hash = await bcrypt.hash(myPassword, salt)
+  console.log('Hash: ', hash)
+  sha
 }
 
 hashPassword()
