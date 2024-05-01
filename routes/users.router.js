@@ -16,6 +16,16 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/email', async (req, res, next) => {
+  try {
+    const email = req.body
+    const response = await service.findByEmail(email);
+    res.json(response);
+  } catch (error) {
+    next(error);
+  }
+});
+
 router.get('/:id',
   validatorHandler(getUserSchema, 'params'),
   async (req, res, next) => {
