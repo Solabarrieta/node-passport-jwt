@@ -15,7 +15,6 @@ const OrderSchema = {
     field: 'customer_id',
     allowNull: false,
     type: DataTypes.INTEGER,
-    unique: true,
     references: {
       model: CUSTOMER_TABLE,
       key: 'id'
@@ -32,12 +31,12 @@ const OrderSchema = {
   total: {
     type: DataTypes.VIRTUAL,
     get() {
-      if (this.items.length > 0) {
+      if (this.items && this.items.length > 0) {
         return this.items.reduce((total, item) => {
-          return total + (parseInt(item.price) * parseInt(item.OrderProduct.amount))
+          return total + (item.price * item.OrderProduct.amount)
         }, 0)
       }
-      return 0
+      return 0;
     }
   }
 }
