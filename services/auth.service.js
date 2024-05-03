@@ -1,7 +1,7 @@
 const boom = require('@hapi/boom');
 const UserService = require('./user.service');
 const bcrypt = require('bcrypt');
-const jwt = require('passport-jwt');
+const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 
 const { config } = require('../config/config')
@@ -73,12 +73,22 @@ class AuthService {
 
   async changePassword(token, newPassword) {
     try {
-      const payload = jwt.verfify(token, config.jwtSecret)
+      //Verify token and get payload
+      const payload = jwt.verify(token, config.jwtSecret)
+
+      //Get user with userId obtained from payload.sub
       const user = await service.findOne(payload.sub)
+
+      //Compare user.recoveryToken with the token sent by client
       if (user.recoveryToken !== token) throw boom.unauthorized()
+
+      //Hash the new password sent by client if the token are equal
       const hash = await bcrypt.hash(newPassword, 10);
+
+      //Update password and set recoveryToken to null
       const response = await service.update(user.id, { recoveryToken: null, password: hash })
       return response
+
     } catch (error) {
       throw boom.unauthorized()
     }
